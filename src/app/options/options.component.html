@@ -1,0 +1,23 @@
+<mat-card class="options-card">
+  <mat-card-header class="custom-card-header">
+    <div mat-card-avatar class="header-image"></div>
+    <mat-card-title>Choose your Magical Tool</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+      <div class="image" [ngStyle]="{'background-image': 'url('+imageString+')'}"></div>
+      <div class="column-buttons">
+          <a mat-raised-button (click)="colorizeImage()">
+              Automatic Colorization
+          </a>
+          <a mat-raised-button routerLink="inter">
+              Interactive Colorization
+          </a>
+          <a mat-raised-button (click)="superResImage()">
+              Super Resolution
+          </a>
+      </div>
+    <div *ngIf="loading" class="loader"></div>
+  </mat-card-content>
+</mat-card>
+
+<ngb-alert class="error" type="danger" *ngIf="sendError" (close)="close()">{{ messageError }}</ngb-alert>

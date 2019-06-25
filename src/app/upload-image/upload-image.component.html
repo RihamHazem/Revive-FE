@@ -1,0 +1,16 @@
+<mat-toolbar class="toolbar">
+  <mat-toolbar-row class="hero-section">
+    <h1 class="">ADD LIFE TO YOUR OLD PHOTOS</h1>
+    <p>Automatically colorize your old black and white photo or <br> Manually edit the auto colorized ones with thye colors you want in an easy and super accurate way.
+      <br>
+      Add the quality to it by the Super Resolution tool</p>
+  </mat-toolbar-row>
+  <div class="layer"></div>
+</mat-toolbar>
+<div class="drop-image" appDragAndDrop (filesChangeEmiter)="onFilesChange($event)" (filesInvalidEmiter)="onFileInvalids($event)" [allowedExtensions]="['png', 'jpg', 'bmp', 'gif', 'jpeg']">
+  <div class="text-wrapper">
+    <div class="centered">Drop your image here!</div>
+  </div>
+</div>
+<ngb-alert class="error" type="danger" *ngIf="uploadError" (close)="close()">{{ messageError }}</ngb-alert>
+

@@ -1,0 +1,12 @@
+@import '../node_modules/@angular/material/prebuilt-themes/indigo-pink.css';
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body, html {
+  /*background-color: #303030;*/
+  background-color: #f6f6f6 !important;
+  height: 100%;
+}

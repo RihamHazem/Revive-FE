@@ -1,0 +1,12 @@
+<!--The content below is only a placeholder and can be replaced.-->
+<div class="content">
+  <app-nav-bar [heroSection]="mode === 'upload'"></app-nav-bar>
+<!--<app-interactive-colorization *ngIf="mode === 'interactive'" [imageUrl]="imageUrl" [imageOffset]="imageOffset"></app-interactive-colorization>-->
+<!--<app-auto-colorization *ngIf="mode === 'auto'" [imageUrl]="imageUrl" [imageName]="imageName"></app-auto-colorization>-->
+<!--<app-super-resolution *ngIf="mode === 'res'" [imageUrl]="imageUrl" [imageName]="imageName"></app-super-resolution>-->
+<!--<app-upload-image (options)="optionsMode($event)"></app-upload-image>-->
+<router-outlet></router-outlet>
+</div>
+<app-footer></app-footer>
+<!--<app-options *ngIf="mode === 'myOptions'" [imageUrl]="imageUrl" [imageName]="imageName"></app-options>-->
+

@@ -1,0 +1,18 @@
+<mat-card class="res-card">
+  <mat-card-header>
+    <div mat-card-avatar class="header-image"></div>
+    <mat-card-title>Super Resolution</mat-card-title>
+    <mat-card-subtitle>Enhace the Resolution of Your Photo</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>  
+    <div class="image" [ngStyle]="{'background-image': 'url('+imageString+')'}"></div>
+    <div class="column-buttons">
+      <button (mousedown)="setOrigImage()" (mouseup)="setResolImage()" color="accent" mat-fab title="Show Original Image">
+        <img [class.image-icon]="imageBW" src="../assets/images/orig_image.svg" style="width: 70%; margin-top: -5px" alt="magic_wand">
+      </button>
+      <a color="accent" mat-fab [href]="imageString" [download]="imageName" title="Download">
+        <img src="../assets/images/download_img.svg" style="width: 50%; margin-top: -3px" alt="magic_wand">
+      </a>
+    </div>
+  </mat-card-content>
+</mat-card>

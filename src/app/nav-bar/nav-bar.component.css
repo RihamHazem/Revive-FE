@@ -1,0 +1,23 @@
+mat-toolbar {
+  background-color: #9D819D;
+}
+
+.nav-row {
+}
+.elevation-z6 {
+  box-shadow:0 3px 5px -1px rgba(0,0,0,.2),0 6px 10px 0 rgba(0,0,0,.14),0 1px 18px 0 rgba(0,0,0,.12);
+}
+
+a {
+  text-decoration: none;
+  color: #84B9D3;
+  padding-left: 50px;
+}
+
+a h1 {
+  font-family: 'Pacifico', cursive;
+  font-size: xx-large;
+  display: inline-block;
+  margin-top: 10px;
+  text-shadow: 0 2px 2px rgba(0, 0, 0, 0.4);
+}
