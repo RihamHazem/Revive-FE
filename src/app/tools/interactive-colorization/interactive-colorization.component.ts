@@ -32,7 +32,7 @@ export class InteractiveColorizationComponent implements OnInit {
     this.shareDataService.currentMessage.subscribe(({img, name}) => {
       this.imageString = img;
       this.imageName = name;
-      this.constructImageOffsets(this.imageString);
+      this.constructImageOffsets();
     });
   }
   changeComplete(colorEvent: ColorEvent) {
@@ -129,13 +129,15 @@ export class InteractiveColorizationComponent implements OnInit {
     });
   }
 
-  constructImageOffsets(imageString: string) {
+  constructImageOffsets() {
     const image = new Image();
-    image.src = imageString;
+    image.src = this.imageString;
 
     image.onload = () => {
       const width = image.width;
       const height = image.height;
+      console.log('Size', width, height);
+      this.imageOffset = {val: 0, dir: true, oldWidth: 0, oldHeight: 0, newWidth: 0, newHeight: 0};
       this.imageOffset.oldWidth = width;
       this.imageOffset.oldHeight = height;
       let offset = -1;
