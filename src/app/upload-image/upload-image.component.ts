@@ -1,6 +1,6 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
-import {Router} from "@angular/router";
-import {ShareDataService} from "../share-data.service";
+import {Router} from '@angular/router';
+import {ShareDataService} from '../share-data.service';
 
 @Component({
   selector: 'app-upload-image',

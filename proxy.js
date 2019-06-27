@@ -1,7 +1,7 @@
 var HttpsProxyAgent = require('https-proxy-agent');
 var proxyConfig = [{
-  context: '/api',
-  target: 'http://localhost:5000',
+  context: '/auto-colorize',
+  target: 'http://127.0.0.1:5000/',
   secure: false
 }];
 
