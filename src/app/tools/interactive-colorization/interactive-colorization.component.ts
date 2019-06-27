@@ -10,9 +10,11 @@ import {ShareDataService} from '../../share-data.service';
 })
 export class InteractiveColorizationComponent implements OnInit {
   private imageString: string;
-  private imageOffset: {val: number, dir: boolean, oldWidth: number, oldHeight: number, newWidth: number, newHeight: number};
+  private imageOffset: { val: number, dir: boolean, oldWidth: number, oldHeight: number, newWidth: number, newHeight: number };
   private imageName: string;
-  constructor(private restRequestsService: RestRequestsService, private shareDataService: ShareDataService) { }
+
+  constructor(private restRequestsService: RestRequestsService, private shareDataService: ShareDataService) {
+  }
 
   colorizeButtonStr = 'Colorize';
   state = {r: 0, g: 0, b: 0, a: 0};
@@ -21,13 +23,15 @@ export class InteractiveColorizationComponent implements OnInit {
   positions = [];
   positionsStyle = [];
   isHidden = [];
-  curColor: {r: number, g: number, b: number, a: number} = {r: 0, g: 0, b: 0, a: 0};
+  curColor: { r: number, g: number, b: number, a: number } = {r: 0, g: 0, b: 0, a: 0};
   selectedPos = -1;
   selectedElem = null;
   imageBW = false;
-  static getRGBA(clr: {r: number, g: number, b: number, a: number}): string {
+
+  static getRGBA(clr: { r: number, g: number, b: number, a: number }): string {
     return 'rgb(' + clr.r + ', ' + clr.g + ', ' + clr.b + ', ' + clr.a + ')';
   }
+
   ngOnInit() {
     this.shareDataService.currentMessage.subscribe(({img, name}) => {
       this.imageString = img;
@@ -35,6 +39,7 @@ export class InteractiveColorizationComponent implements OnInit {
       this.constructImageOffsets();
     });
   }
+
   changeComplete(colorEvent: ColorEvent) {
     this.curColor = colorEvent.color.rgb;
     if (this.selectedElem !== null) {
@@ -86,10 +91,6 @@ export class InteractiveColorizationComponent implements OnInit {
     this.positions.push({
       left: x,
       top: y,
-      oldWidth: this.imageOffset.oldWidth,
-      oldHeight: this.imageOffset.oldHeight,
-      newWidth: this.imageOffset.newWidth,
-      newHeight: this.imageOffset.newHeight,
       'background-color': InteractiveColorizationComponent.getRGBA(this.curColor)
     });
     this.positionsStyle.push({
@@ -112,9 +113,11 @@ export class InteractiveColorizationComponent implements OnInit {
   setBWImage() {
     this.imageBW = true;
   }
+
   setColorImage() {
     this.imageBW = false;
   }
+
   colorizeImage() {
     const filteredPositions = [];
     let i = 0;
@@ -124,11 +127,18 @@ export class InteractiveColorizationComponent implements OnInit {
       }
       i += 1;
     }
-    this.restRequestsService.interColrImage(this.imageString, filteredPositions).subscribe((data) => {
+    const imgInfo = {
+      imgInfo: {
+        oldWidth: this.imageOffset.oldWidth,
+        oldHeight: this.imageOffset.oldHeight,
+        newWidth: this.imageOffset.newWidth,
+        newHeight: this.imageOffset.newHeight
+      }
+    };
+    this.restRequestsService.interColrImage(this.imageString, filteredPositions, imgInfo).subscribe((data) => {
       console.log(data);
     });
   }
-
   constructImageOffsets() {
     const image = new Image();
     image.src = this.imageString;

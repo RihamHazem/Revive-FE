@@ -8,9 +8,9 @@ export class RestRequestsService {
   apiUrl = 'localhost:5000/';
   private options = { headers: new HttpHeaders().set('Content-Type', 'application/json') };
   constructor(private http: HttpClient) { }
-  interColrImage(img: string, positions) {
-    const params = {img, positions};
-    return this.http.post<any>(this.apiUrl + 'colorize', params, this.options);
+  interColrImage(img: string, positions, imgInfo) {
+    const params = {img, positions, imgInfo};
+    return this.http.post<any>(this.apiUrl + 'inter-colorize', params, this.options);
   }
   autoColrImage(img: string) {
     const params = {img};
