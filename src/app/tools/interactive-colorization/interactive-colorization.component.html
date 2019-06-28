@@ -5,7 +5,7 @@
     <mat-card-subtitle>Manually Control the Auto Colorization</mat-card-subtitle>
   </mat-card-header>
   <mat-card-content>
-    <div class="image" [ngStyle]="{'background-image': 'url('+imageString+')'}" (click)="addPoint($event)">
+    <div class="image" [ngStyle]="{'background-image': 'url('+(imageBW? imageString:imageColorized)+')'}" (click)="addPoint($event)">
       <div class="point" [ngStyle]="{'left.px': positionsStyle[i].left + 21, 'top.px': positionsStyle[i].top + 84, 'background-color': positionsStyle[i]['background-color']}" [hidden]="isHidden[i] === true" [id]="'point-' + point.toString()" *ngFor="let point of points; let i=index">
         <img [id]="'close-' + point.toString()" *ngIf="selectedPos == i" src="../assets/images/cancel.svg" alt="">
       </div>
@@ -25,6 +25,8 @@
         <img src="../assets/images/download_img.svg" style="width: 50%; margin-top: -3px" alt="magic_wand">
       </a>
     </div>
-
+    <div *ngIf="loading" class="loader"></div>
   </mat-card-content>
 </mat-card>
+
+<ngb-alert class="error" type="danger" *ngIf="sendError" (close)="close()">{{ messageError }}</ngb-alert>

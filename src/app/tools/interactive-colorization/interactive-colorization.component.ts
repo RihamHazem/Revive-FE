@@ -2,6 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {ColorEvent} from 'ngx-color';
 import {RestRequestsService} from '../../rest-requests.service';
 import {ShareDataService} from '../../share-data.service';
+import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
   selector: 'app-interactive-colorization',
@@ -10,10 +11,11 @@ import {ShareDataService} from '../../share-data.service';
 })
 export class InteractiveColorizationComponent implements OnInit {
   private imageString: string;
+  private imageColorized: string;
   private imageOffset: { val: number, dir: boolean, oldWidth: number, oldHeight: number, newWidth: number, newHeight: number };
   private imageName: string;
 
-  constructor(private restRequestsService: RestRequestsService, private shareDataService: ShareDataService) {
+  constructor(private restRequestsService: RestRequestsService, private shareDataService: ShareDataService, private route: ActivatedRoute, private router: Router) {
   }
 
   colorizeButtonStr = 'Colorize';
@@ -27,17 +29,23 @@ export class InteractiveColorizationComponent implements OnInit {
   selectedPos = -1;
   selectedElem = null;
   imageBW = false;
+  private sendError = false;
+  private messageError = 'Error in sending Image, Maybe it\'s a connection problem';
+  private loading = false;
 
   static getRGBA(clr: { r: number, g: number, b: number, a: number }): string {
     return 'rgb(' + clr.r + ', ' + clr.g + ', ' + clr.b + ')';
   }
-
   ngOnInit() {
     this.shareDataService.currentMessage.subscribe(({img, name}) => {
       this.imageString = img;
+      this.imageColorized = img;
       this.imageName = name;
       this.constructImageOffsets();
     });
+    if (this.imageColorized === '') {
+      this.router.navigateByUrl('/');
+    }
   }
 
   changeComplete(colorEvent: ColorEvent) {
@@ -119,6 +127,7 @@ export class InteractiveColorizationComponent implements OnInit {
   }
 
   colorizeImage() {
+    this.loading = true;
     const filteredPositions = [];
     let i = 0;
     for (const elem of this.isHidden) {
@@ -135,7 +144,18 @@ export class InteractiveColorizationComponent implements OnInit {
       newHeight: this.imageOffset.newHeight
     };
     this.restRequestsService.interColrImage(this.imageString, filteredPositions, imgInfo).subscribe((data) => {
-      console.log(data);
+      if (data.hasOwnProperty('image')) {
+        this.imageColorized = data.image;
+        this.positions.length = 0;
+        this.positionsStyle.length = 0;
+        this.isHidden.length = 0;
+      } else {
+        this.sendError = true;
+      }
+      this.loading = false;
+    }, error1 => {
+      this.sendError = true;
+      this.loading = false;
     });
   }
   constructImageOffsets() {
@@ -164,5 +184,9 @@ export class InteractiveColorizationComponent implements OnInit {
       offset = ((this.divWidth - offset) / 2);
       this.imageOffset.val = offset;
     };
+  }
+  close() {
+    this.sendError = false;
+    this.loading = false;
   }
 }

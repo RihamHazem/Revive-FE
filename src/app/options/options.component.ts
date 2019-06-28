@@ -26,6 +26,9 @@ export class OptionsComponent implements OnInit {
       this.imageString = img;
       this.imageName = name;
     });
+    if (this.imageString === '') {
+      this.router.navigateByUrl('/');
+    }
   }
   colorizeImage() {
     this.loading = true;
@@ -38,6 +41,9 @@ export class OptionsComponent implements OnInit {
         this.shareDataService.changeNewMessage(data.img);
         this.loading = false;
         this.router.navigateByUrl('/tools/auto');
+      } else {
+        this.sendError = true;
+        this.loading = false;
       }
     }, error1 => {
       this.sendError = true;
@@ -57,9 +63,11 @@ export class OptionsComponent implements OnInit {
         this.router.navigateByUrl('/tools/super');
       } else {
         this.sendError = true;
+        this.loading = false;
       }
     }, (error1) => {
       this.sendError = true;
+      this.loading = false;
     });
   }
   close() {

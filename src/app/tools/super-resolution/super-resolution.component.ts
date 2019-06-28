@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import {ShareDataService} from '../../share-data.service';
+import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
   selector: 'app-super-resolution',
@@ -12,7 +13,7 @@ export class SuperResolutionComponent implements OnInit {
   private imageName: string;
   imageOrig = false;
 
-  constructor(private shareDataService: ShareDataService) { }
+  constructor(private shareDataService: ShareDataService, private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit() {
     this.shareDataService.currentMessage.subscribe(({img, name}) => {
@@ -22,6 +23,9 @@ export class SuperResolutionComponent implements OnInit {
     this.shareDataService.newMessage.subscribe((img) => {
       this.imageString = img;
     });
+    if (this.originalImage === '') {
+      this.router.navigateByUrl('/');
+    }
   }
 
   setOrigImage() {

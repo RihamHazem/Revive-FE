@@ -68,3 +68,20 @@ div.point {
   -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
   filter: grayscale(100%);
 }
+
+
+.loader {
+  position: fixed; left: 0;
+  top: 64px; width: 100%;
+  height: calc(100% - 130px);
+  background-color:rgba(255, 255, 255, 0.8);
+  background-image:url(../../../assets/images/loader.gif);
+  background-size: 100px; background-position:center;
+  background-repeat: no-repeat;
+}
+
+.error {
+  position: fixed;
+  left: 20px;
+  bottom: 20px;
+}

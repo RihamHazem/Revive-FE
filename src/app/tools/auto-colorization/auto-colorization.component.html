@@ -10,12 +10,15 @@
       <button (mousedown)="setBWImage()" (mouseup)="setColorImage()" mat-fab title="Show Original Image">
         <img [class.image-icon]="imageBW" src="../assets/images/orig_image.svg" style="width: 70%; margin-top: -5px" alt="magic_wand">
       </button>
-      <button mat-fab title="Super Resolution">
+      <button mat-fab title="Super Resolution" (click)="superResImage()">
         <img src="../assets/images/image_magnify.svg" style="width: 70%; margin-top: -5px" alt="magic_wand">
       </button>
       <a mat-fab [href]="imageString" [download]="imageName" title="Download">
         <img src="../assets/images/download_img.svg" style="width: 50%; margin-top: -3px" alt="magic_wand">
       </a>
     </div>
+    <div *ngIf="loading" class="loader"></div>
   </mat-card-content>
 </mat-card>
+
+<ngb-alert class="error" type="danger" *ngIf="sendError" (close)="close()">{{ messageError }}</ngb-alert>
