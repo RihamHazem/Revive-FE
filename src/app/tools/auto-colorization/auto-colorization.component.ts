@@ -9,14 +9,18 @@ import {ShareDataService} from '../../share-data.service';
 export class AutoColorizationComponent implements OnInit {
 
   private imageString: string;
+  private origImage: string;
   private imageName: string;
   imageBW = false;
   constructor(private shareDataService: ShareDataService) { }
 
   ngOnInit() {
     this.shareDataService.currentMessage.subscribe(({img, name}) => {
-      this.imageString = img;
+      this.origImage = img;
       this.imageName = name;
+    });
+    this.shareDataService.newMessage.subscribe((img) => {
+      this.imageString = img;
     });
   }
 

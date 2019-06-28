@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import {ShareDataService} from "../../share-data.service";
+import {ShareDataService} from '../../share-data.service';
 
 @Component({
   selector: 'app-super-resolution',
@@ -8,6 +8,7 @@ import {ShareDataService} from "../../share-data.service";
 })
 export class SuperResolutionComponent implements OnInit {
   private imageString: string;
+  private originalImage: string;
   private imageName: string;
   imageOrig = false;
 
@@ -15,8 +16,11 @@ export class SuperResolutionComponent implements OnInit {
 
   ngOnInit() {
     this.shareDataService.currentMessage.subscribe(({img, name}) => {
-      this.imageString = img;
+      this.originalImage = img;
       this.imageName = name;
+    });
+    this.shareDataService.newMessage.subscribe((img) => {
+      this.imageString = img;
     });
   }
 

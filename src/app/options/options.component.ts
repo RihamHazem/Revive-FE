@@ -29,11 +29,16 @@ export class OptionsComponent implements OnInit {
   }
   colorizeImage() {
     this.loading = true;
-    this.restReqService.autoColrImage(this.imageString).subscribe((img) => {
+    this.restReqService.autoColrImage(this.imageString).subscribe((data) => {
       // response is the colorized image
-      this.shareDataService.changeMessage(img, this.imageName);
-      this.loading = false;
-      this.router.navigateByUrl('/auto');
+      if (data.hasOwnProperty('img')) {
+        // black and white image
+        this.shareDataService.changeMessage(this.imageString, this.imageName);
+        // colorized image
+        this.shareDataService.changeNewMessage(data.img);
+        this.loading = false;
+        this.router.navigateByUrl('/tools/auto');
+      }
     }, error1 => {
       this.sendError = true;
       this.loading = false;
@@ -41,11 +46,18 @@ export class OptionsComponent implements OnInit {
   }
   superResImage() {
     this.loading = true;
-    this.restReqService.superResImage(this.imageString).subscribe((img) => {
+    this.restReqService.superResImage(this.imageString).subscribe((data) => {
       // response is the colorized image
-      this.shareDataService.changeMessage(img, this.imageName);
-      this.loading = false;
-      this.router.navigateByUrl('/super');
+      if (data.hasOwnProperty('img')) {
+        // original image
+        this.shareDataService.changeMessage(this.imageString, this.imageName);
+        // super resolution image
+        this.shareDataService.changeNewMessage(data.img);
+        this.loading = false;
+        this.router.navigateByUrl('/tools/super');
+      } else {
+        this.sendError = true;
+      }
     }, (error1) => {
       this.sendError = true;
     });

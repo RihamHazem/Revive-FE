@@ -29,7 +29,7 @@ export class InteractiveColorizationComponent implements OnInit {
   imageBW = false;
 
   static getRGBA(clr: { r: number, g: number, b: number, a: number }): string {
-    return 'rgb(' + clr.r + ', ' + clr.g + ', ' + clr.b + ', ' + clr.a + ')';
+    return 'rgb(' + clr.r + ', ' + clr.g + ', ' + clr.b + ')';
   }
 
   ngOnInit() {
@@ -122,18 +122,17 @@ export class InteractiveColorizationComponent implements OnInit {
     const filteredPositions = [];
     let i = 0;
     for (const elem of this.isHidden) {
-      if (elem === true) {
+      console.log(this.isHidden);
+      if (elem === false) {
         filteredPositions.push(this.positions[i]);
       }
       i += 1;
     }
     const imgInfo = {
-      imgInfo: {
-        oldWidth: this.imageOffset.oldWidth,
-        oldHeight: this.imageOffset.oldHeight,
-        newWidth: this.imageOffset.newWidth,
-        newHeight: this.imageOffset.newHeight
-      }
+      oldWidth: this.imageOffset.oldWidth,
+      oldHeight: this.imageOffset.oldHeight,
+      newWidth: this.imageOffset.newWidth,
+      newHeight: this.imageOffset.newHeight
     };
     this.restRequestsService.interColrImage(this.imageString, filteredPositions, imgInfo).subscribe((data) => {
       console.log(data);
@@ -154,13 +153,13 @@ export class InteractiveColorizationComponent implements OnInit {
       if (width > height) {
         offset = (this.divWidth / width) * height;
         this.imageOffset.dir = false;
-        this.imageOffset.newWidth = width;
+        this.imageOffset.newWidth = this.divWidth;
         this.imageOffset.newHeight = offset;
       } else {
         offset = (this.divWidth / height) * width;
         this.imageOffset.dir = true;
         this.imageOffset.newWidth = offset;
-        this.imageOffset.newHeight = height;
+        this.imageOffset.newHeight = this.divWidth;
       }
       offset = ((this.divWidth - offset) / 2);
       this.imageOffset.val = offset;

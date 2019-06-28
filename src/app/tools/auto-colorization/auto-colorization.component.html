@@ -5,7 +5,7 @@
     <mat-card-subtitle>Automatically Colorize Your Photo</mat-card-subtitle>
   </mat-card-header>
   <mat-card-content>  
-    <div class="image" [ngStyle]="{'background-image': 'url('+imageString+')'}"></div>
+    <div class="image" [ngStyle]="{'background-image': 'url('+(imageBW? origImage:imageString)+')'}"></div>
     <div class="column-buttons">
       <button (mousedown)="setBWImage()" (mouseup)="setColorImage()" mat-fab title="Show Original Image">
         <img [class.image-icon]="imageBW" src="../assets/images/orig_image.svg" style="width: 70%; margin-top: -5px" alt="magic_wand">
