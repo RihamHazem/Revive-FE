@@ -6,7 +6,7 @@
   <mat-card-content>
       <div class="image" [ngStyle]="{'background-image': 'url('+imageString+')'}"></div>
       <div class="column-buttons">
-          <a mat-raised-button (click)="colorizeImage()">
+          <a mat-raised-button (click)="openDialog()">
               Automatic Colorization
           </a>
           <a mat-raised-button routerLink="inter">
@@ -21,3 +21,4 @@
 </mat-card>
 
 <ngb-alert class="error" type="danger" *ngIf="sendError" (close)="close()">{{ messageError }}</ngb-alert>
+

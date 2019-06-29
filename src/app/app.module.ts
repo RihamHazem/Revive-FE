@@ -3,7 +3,15 @@ import { NgModule, Component } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import {ColorSketchModule} from 'ngx-color/sketch';
-import {MatButtonModule, MatCardModule, MatGridListModule, MatIconModule, MatToolbarModule} from '@angular/material';
+import {
+  MatButtonModule,
+  MatCardModule,
+  MatGridListModule,
+  MatIconModule,
+  MatToolbarModule,
+  MatBottomSheetModule,
+  MatRadioModule, MatListModule, MatDialogModule
+} from '@angular/material';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { InteractiveColorizationComponent } from './tools/interactive-colorization/interactive-colorization.component';
 import { NavBarComponent } from './nav-bar/nav-bar.component';
@@ -12,11 +20,11 @@ import { UploadImageComponent } from './upload-image/upload-image.component';
 import { DragAndDropDirective } from './drag-and-drop.directive';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {HttpClientModule} from '@angular/common/http';
-import { OptionsComponent } from './options/options.component';
+import {DialogComponent, OptionsComponent} from './options/options.component';
 import { AutoColorizationComponent } from './tools/auto-colorization/auto-colorization.component';
 import { SuperResolutionComponent } from './tools/super-resolution/super-resolution.component';
 import { AppRoutingModule } from './app-routing.module';
-
+import {FormsModule} from '@angular/forms';
 @NgModule({
   declarations: [
     AppComponent,
@@ -27,8 +35,10 @@ import { AppRoutingModule } from './app-routing.module';
     DragAndDropDirective,
     OptionsComponent,
     AutoColorizationComponent,
-    SuperResolutionComponent
+    SuperResolutionComponent,
+    DialogComponent
   ],
+  entryComponents: [DialogComponent],
   imports: [
     BrowserModule,
     HttpClientModule,
@@ -38,9 +48,14 @@ import { AppRoutingModule } from './app-routing.module';
     MatButtonModule,
     MatGridListModule,
     MatIconModule,
+    MatBottomSheetModule,
+    MatRadioModule,
     NgbModule,
     ColorSketchModule,
-    AppRoutingModule
+    AppRoutingModule,
+    MatListModule,
+    FormsModule,
+    MatDialogModule
   ],
   providers: [],
   bootstrap: [AppComponent]

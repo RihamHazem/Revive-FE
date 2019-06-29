@@ -1,7 +1,8 @@
-import { Component, OnInit, Input } from '@angular/core';
+import {Component, OnInit, Input, Inject} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {ShareDataService} from '../share-data.service';
 import {RestRequestsService} from '../rest-requests.service';
+import {MAT_DIALOG_DATA, MatDialog} from '@angular/material';
 
 @Component({
   selector: 'app-options',
@@ -17,7 +18,8 @@ export class OptionsComponent implements OnInit {
   constructor(private route: ActivatedRoute,
               private router: Router,
               private shareDataService: ShareDataService,
-              private restReqService: RestRequestsService) {
+              private restReqService: RestRequestsService,
+              public dialog: MatDialog) {
     this.imageString = this.route.snapshot.queryParamMap.get('imageString');
     this.imageName = this.route.snapshot.queryParamMap.get('imageName');
   }
@@ -30,9 +32,20 @@ export class OptionsComponent implements OnInit {
       this.router.navigateByUrl('/');
     }
   }
-  colorizeImage() {
+  openDialog(): void {
+    const dialogRef = this.dialog.open(DialogComponent, {
+      width: '500px',
+      data: 0
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed', result);
+      this.colorizeImage(result);
+    });
+  }
+  public colorizeImage(model: number) { // number of the model that user chose
     this.loading = true;
-    this.restReqService.autoColrImage(this.imageString).subscribe((data) => {
+    this.restReqService.autoColrImage(this.imageString, model).subscribe((data) => {
       // response is the colorized image
       if (data.hasOwnProperty('img')) {
         // black and white image
@@ -74,4 +87,17 @@ export class OptionsComponent implements OnInit {
     this.sendError = false;
     this.loading = false;
   }
+}
+
+
+@Component({
+  selector: 'app-dialog',
+  templateUrl: 'dialog.component.html',
+})
+export class DialogComponent {
+  models = ['GANs All Objects', 'Specifically Faces Approach#1', 'Specifically Faces Approach#2'];
+  selectedModel = 0;
+
+  constructor(@Inject(MAT_DIALOG_DATA) public data: number) {}
+
 }

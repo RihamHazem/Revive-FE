@@ -13,8 +13,8 @@ export class RestRequestsService {
     console.log(params);
     return this.http.post<any>(this.apiUrl + 'inter-colorize', params);
   }
-  autoColrImage(img: string) {
-    const params = {img};
+  autoColrImage(img: string, model) {
+    const params = {img, model};
     return this.http.post<{img: string}>(this.apiUrl + 'auto-colorize', params);
   }
   superResImage(img: string) {
