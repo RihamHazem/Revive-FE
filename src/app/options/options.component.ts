@@ -40,6 +40,10 @@ export class OptionsComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed', result);
+      if (result === undefined) {
+        this.loading = false;
+        return;
+      }
       this.colorizeImage(result);
     });
   }
@@ -95,7 +99,7 @@ export class OptionsComponent implements OnInit {
   templateUrl: 'dialog.component.html',
 })
 export class DialogComponent {
-  models = ['GANs All Objects', 'Specifically Faces Approach#1', 'Specifically Faces Approach#2'];
+  models = ['All Objects', 'Specifically Faces Approach#1', 'Specifically Faces Approach#2'];
   selectedModel = 0;
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: number) {}

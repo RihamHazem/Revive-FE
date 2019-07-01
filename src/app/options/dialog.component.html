@@ -5,11 +5,11 @@
     aria-labelledby="example-radio-group-label"
     class="example-radio-group"
     [(ngModel)]="selectedModel">
-    <mat-radio-button *ngFor="let model of models; let i=index" [value]="i">
+    <mat-radio-button style="display: block; font-size: x-small" *ngFor="let model of models; let i=index" [value]="i">
       {{model}}
     </mat-radio-button>
   </mat-radio-group>
   <div>
-    <button mat-button [mat-dialog-close]="selectedModel">Colorize</button>
+    <button mat-raised-button style="background-color: #ffefa1" [mat-dialog-close]="selectedModel">Colorize</button>
   </div>
 </mat-nav-list>

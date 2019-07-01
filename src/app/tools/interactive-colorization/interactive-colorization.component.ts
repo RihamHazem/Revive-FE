@@ -2,7 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {ColorEvent} from 'ngx-color';
 import {RestRequestsService} from '../../rest-requests.service';
 import {ShareDataService} from '../../share-data.service';
-import {ActivatedRoute, Router} from "@angular/router";
+import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
   selector: 'app-interactive-colorization',
@@ -146,14 +146,14 @@ export class InteractiveColorizationComponent implements OnInit {
     this.restRequestsService.interColrImage(this.imageString, filteredPositions, imgInfo).subscribe((data) => {
       if (data.hasOwnProperty('image')) {
         this.imageColorized = data.image;
-        this.positions.length = 0;
-        this.positionsStyle.length = 0;
-        this.isHidden.length = 0;
+        this.isHidden.fill(true);
       } else {
+        console.log('ERROR:', data);
         this.sendError = true;
       }
       this.loading = false;
     }, error1 => {
+      console.log('ERROR:', error1);
       this.sendError = true;
       this.loading = false;
     });
