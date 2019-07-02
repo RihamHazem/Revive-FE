@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import {ShareDataService} from '../../share-data.service';
 import {RestRequestsService} from '../../rest-requests.service';
-import {ActivatedRoute, Router} from "@angular/router";
+import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
   selector: 'app-auto-colorization',
@@ -57,6 +57,5 @@ export class AutoColorizationComponent implements OnInit {
   }
   close() {
     this.sendError = false;
-    this.loading = false;
   }
 }

@@ -187,6 +187,5 @@ export class InteractiveColorizationComponent implements OnInit {
   }
   close() {
     this.sendError = false;
-    this.loading = false;
   }
 }

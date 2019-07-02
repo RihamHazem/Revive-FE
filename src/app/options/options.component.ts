@@ -51,6 +51,7 @@ export class OptionsComponent implements OnInit {
     this.loading = true;
     this.restReqService.autoColrImage(this.imageString, model).subscribe((data) => {
       // response is the colorized image
+      console.log('Data:', data);
       if (data.hasOwnProperty('img')) {
         // black and white image
         this.shareDataService.changeMessage(this.imageString, this.imageName);
@@ -63,6 +64,7 @@ export class OptionsComponent implements OnInit {
         this.loading = false;
       }
     }, error1 => {
+      console.log(error1);
       this.sendError = true;
       this.loading = false;
     });
@@ -89,7 +91,6 @@ export class OptionsComponent implements OnInit {
   }
   close() {
     this.sendError = false;
-    this.loading = false;
   }
 }
 
