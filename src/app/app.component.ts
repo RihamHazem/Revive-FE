@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, HostListener, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 
 @Component({
@@ -12,11 +12,11 @@ export class AppComponent implements OnInit {
   imageUrl: string|ArrayBuffer;
   imageOffset = {val: -1, direc: false, oldWidth: 0, oldHeight: 0, newWidth: 0, newHeight: 0}; // false: width, true: height
   imageName: string;
-  constructor(private router: Router) { }
+  constructor(private router: Router) {
+  }
 
   ngOnInit() {
   }
-
   interColorizationMode(imgFile: File) {
     const reader = new FileReader();
     reader.readAsDataURL(imgFile);

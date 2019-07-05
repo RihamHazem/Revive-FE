@@ -5,11 +5,12 @@
     <mat-card-subtitle>Manually Control the Auto Colorization</mat-card-subtitle>
   </mat-card-header>
   <mat-card-content>
-    <div class="image" [ngStyle]="{'background-image': 'url('+(imageBW? imageString:imageColorized)+')'}" (click)="addPoint($event)">
-      <div class="point" [ngStyle]="{'left.px': positionsStyle[i].left + 21, 'top.px': positionsStyle[i].top + 84, 'background-color': positionsStyle[i]['background-color']}" [hidden]="isHidden[i] === true" [id]="'point-' + point.toString()" *ngFor="let point of points; let i=index">
+    <div class="image bw-img" [ngStyle]="{'background-image': 'url('+(imageString)+')'}" (click)="addPoint($event)">
+      <div class="point" [ngStyle]="{'left.px': positionsStyle[i].left + 17, 'top.px': positionsStyle[i].top + 82, 'background-color': positionsStyle[i]['background-color']}" [hidden]="isHidden[i] === true" [id]="'point-' + point.toString()" *ngFor="let point of points; let i=index">
         <img [id]="'close-' + point.toString()" *ngIf="selectedPos == i" src="../assets/images/cancel.svg" alt="">
       </div>
     </div>
+    <div class="image" [ngStyle]="{'background-image': 'url('+(imageColorized)+')'}"></div>
     <div class="color-picker">
       <color-sketch [color]="state" (onChangeComplete)="changeComplete($event)"></color-sketch>
       <button mat-fab style="float: left; margin-top: 20px; vertical-align: center" (click)="colorizeImage()" title="Colorize">
@@ -18,11 +19,11 @@
       <button (mousedown)="setBWImage()" (mouseup)="setColorImage()" mat-fab style="float: left; margin-top: 20px; margin-left: 7px; vertical-align: center" title="Show Original Image">
         <img [class.image-icon]="imageBW" src="../assets/images/orig_image.svg" style="width: 70%; margin-top: -5px" alt="magic_wand">
       </button>
-      <button mat-fab style="float: left; margin-top: 20px; margin-left: 7px; vertical-align: center" title="Super Resolution">
-        <img src="../assets/images/image_magnify.svg" style="width: 70%; margin-top: -5px" alt="magic_wand">
+      <button mat-fab style="float: left; margin-top: 20px; margin-left: 7px; vertical-align: center" title="Restore Original Image">
+        <img src="../assets/images/restore.svg" style="width: 70%; margin-top: -5px" alt="restore">
       </button>
       <a mat-fab style="float: left; margin-top: 20px; margin-left: 7px; vertical-align: center" [href]="imageString" [download]="imageName" title="Download">
-        <img src="../assets/images/download_img.svg" style="width: 50%; margin-top: -3px" alt="magic_wand">
+        <img src="../assets/images/download_img.svg" style="width: 50%; margin-top: -3px" alt="download">
       </a>
     </div>
     <div *ngIf="loading" class="loader"></div>

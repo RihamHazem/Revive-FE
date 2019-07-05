@@ -5,13 +5,18 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
   providedIn: 'root'
 })
 export class RestRequestsService {
-  apiUrl = 'http://localhost:5000/';
+  apiUrl = 'http://f79d5b2f.ngrok.io/';
   // private options = { headers: new HttpHeaders().set('Content-Type', 'multipart/mixed; boundary="xxxx"') };
   constructor(private http: HttpClient) { }
-  interColrImage(img: string, positions, imgInfo) {
-    const params = {img, positions, imgInfo};
+  interColrImage(positions, imgToken) {
+    const params = {positions, path: imgToken};
     // console.log(params);
     return this.http.post<any>(this.apiUrl + 'inter-colorize', params);
+  }
+  interAutoColrImage(img: string, imgInfo) {
+    const params = {img, imgInfo};
+    // console.log(params);
+    return this.http.post<any>(this.apiUrl + 'inter-auto-colorize', params);
   }
   autoColrImage(img: string, model) {
     const params = {img, model};
@@ -19,6 +24,10 @@ export class RestRequestsService {
   }
   superResImage(img: string) {
     const params = {img};
+    return this.http.post<any>(this.apiUrl + 'super-res', params);
+  }
+  deleteImage(path: string) {
+    const params = {path};
     return this.http.post<any>(this.apiUrl + 'super-res', params);
   }
 }

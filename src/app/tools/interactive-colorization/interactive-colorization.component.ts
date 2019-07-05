@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, HostListener, OnInit} from '@angular/core';
 import {ColorEvent} from 'ngx-color';
 import {RestRequestsService} from '../../rest-requests.service';
 import {ShareDataService} from '../../share-data.service';
@@ -12,15 +12,23 @@ import {ActivatedRoute, Router} from '@angular/router';
 export class InteractiveColorizationComponent implements OnInit {
   private imageString: string;
   private imageColorized: string;
-  private imageOffset: { val: number, dir: boolean, oldWidth: number, oldHeight: number, newWidth: number, newHeight: number };
+  private imgToken = '';
+  private imageOffset: { val: number, dir: boolean, newWidth: number, newHeight: number };
   private imageName: string;
 
-  constructor(private restRequestsService: RestRequestsService, private shareDataService: ShareDataService, private route: ActivatedRoute, private router: Router) {
+  constructor(private restRequestsService: RestRequestsService,
+              private shareDataService: ShareDataService,
+              private route: ActivatedRoute,
+              private router: Router) {
+    // window.onunload = this.deleteImage;
+    // window.onbeforeunload = () => {
+    //   console.log('event');
+    //   alert('hello');
+    //   return false;
+    // };
   }
-
   colorizeButtonStr = 'Colorize';
   state = {r: 0, g: 0, b: 0, a: 0};
-  divWidth = 500;
   points = [];
   positions = [];
   positionsStyle = [];
@@ -36,18 +44,40 @@ export class InteractiveColorizationComponent implements OnInit {
   static getRGBA(clr: { r: number, g: number, b: number, a: number }): string {
     return 'rgb(' + clr.r + ', ' + clr.g + ', ' + clr.b + ')';
   }
+  // @HostListener('window:beforeunload', ['$event'])
+  // beforeloadHandler(event) {
+  //   alert('hello');
+  //   this.deleteImage();
+  // }
   ngOnInit() {
     this.shareDataService.currentMessage.subscribe(({img, name}) => {
       this.imageString = img;
-      this.imageColorized = img;
       this.imageName = name;
-      this.constructImageOffsets();
+    });
+    this.shareDataService.interMessage.subscribe(({img, imgToken, imgOffset}) => {
+      this.imageColorized = img;
+      this.imgToken = imgToken;
+      this.imageOffset = imgOffset;
     });
     if (this.imageColorized === '') {
       this.router.navigateByUrl('/');
     }
   }
 
+  @HostListener('window:beforeunload', ['$event'])
+  unloadHandler(event) {
+    // this.deleteImage();
+    // tell back-end to delete image
+    console.log(event);
+    this.restRequestsService.deleteImage(this.imgToken).subscribe((data) => {
+      console.log('Data', data);
+      // alert('hello');
+    });
+    event.returnValue = true;
+  }
+  goodBye() {
+    alert('Goodbye, Riham!');
+  }
   changeComplete(colorEvent: ColorEvent) {
     this.curColor = colorEvent.color.rgb;
     if (this.selectedElem !== null) {
@@ -137,16 +167,10 @@ export class InteractiveColorizationComponent implements OnInit {
       }
       i += 1;
     }
-    const imgInfo = {
-      oldWidth: this.imageOffset.oldWidth,
-      oldHeight: this.imageOffset.oldHeight,
-      newWidth: this.imageOffset.newWidth,
-      newHeight: this.imageOffset.newHeight
-    };
-    this.restRequestsService.interColrImage(this.imageString, filteredPositions, imgInfo).subscribe((data) => {
+    console.log('Token', this.imgToken);
+    this.restRequestsService.interColrImage(filteredPositions, this.imgToken).subscribe((data) => {
       if (data.hasOwnProperty('image')) {
         this.imageColorized = data.image;
-        this.isHidden.fill(true);
       } else {
         console.log('ERROR:', data);
         this.sendError = true;
@@ -158,34 +182,12 @@ export class InteractiveColorizationComponent implements OnInit {
       this.loading = false;
     });
   }
-  constructImageOffsets() {
-    const image = new Image();
-    image.src = this.imageString;
-
-    image.onload = () => {
-      const width = image.width;
-      const height = image.height;
-      console.log('Size', width, height);
-      this.imageOffset = {val: 0, dir: true, oldWidth: 0, oldHeight: 0, newWidth: 0, newHeight: 0};
-      this.imageOffset.oldWidth = width;
-      this.imageOffset.oldHeight = height;
-      let offset = -1;
-      if (width > height) {
-        offset = (this.divWidth / width) * height;
-        this.imageOffset.dir = false;
-        this.imageOffset.newWidth = this.divWidth;
-        this.imageOffset.newHeight = offset;
-      } else {
-        offset = (this.divWidth / height) * width;
-        this.imageOffset.dir = true;
-        this.imageOffset.newWidth = offset;
-        this.imageOffset.newHeight = this.divWidth;
-      }
-      offset = ((this.divWidth - offset) / 2);
-      this.imageOffset.val = offset;
-    };
-  }
   close() {
     this.sendError = false;
+  }
+  restoreOriginal() {
+    this.isHidden.fill(true);
+  }
+  deleteImage() {
   }
 }

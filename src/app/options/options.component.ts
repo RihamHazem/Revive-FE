@@ -15,6 +15,8 @@ export class OptionsComponent implements OnInit {
   loading = false;
   sendError = false;
   messageError = 'Error in sending Image, Maybe it\'s a connection problem';
+  private imageOffset: { val: number, dir: boolean, newWidth: number, newHeight: number };
+  divWidth = 384;
   constructor(private route: ActivatedRoute,
               private router: Router,
               private shareDataService: ShareDataService,
@@ -69,6 +71,34 @@ export class OptionsComponent implements OnInit {
       this.loading = false;
     });
   }
+  public interAutoColorizeImage() { // number of the model that user chose
+    this.loading = true;
+    const imgInfo = {
+      newWidth: this.imageOffset.newWidth,
+      newHeight: this.imageOffset.newHeight
+    };
+    this.restReqService.interAutoColrImage(this.imageString, imgInfo).subscribe((data) => {
+      // response is the colorized image
+      console.log('Data:', data);
+      if (data.hasOwnProperty('image')) {
+        // black and white image
+        this.shareDataService.changeMessage(this.imageString, this.imageName);
+        // colorized image
+        const imgToken = data.name;
+        console.log('Token', imgToken);
+        this.shareDataService.changeInterMessage(data.image, imgToken, this.imageOffset);
+        this.loading = false;
+        this.router.navigateByUrl('/tools/inter');
+      } else {
+        this.sendError = true;
+        this.loading = false;
+      }
+    }, error1 => {
+      console.log(error1);
+      this.sendError = true;
+      this.loading = false;
+    });
+  }
   superResImage() {
     this.loading = true;
     this.restReqService.superResImage(this.imageString).subscribe((data) => {
@@ -88,6 +118,32 @@ export class OptionsComponent implements OnInit {
       this.sendError = true;
       this.loading = false;
     });
+  }
+  constructImageOffsets() {
+    const image = new Image();
+    image.src = this.imageString;
+
+    image.onload = () => {
+      const width = image.width;
+      const height = image.height;
+      console.log('Size', width, height);
+      this.imageOffset = {val: 0, dir: true, newWidth: 0, newHeight: 0};
+      let offset = -1;
+      if (width > height) {
+        offset = (this.divWidth / width) * height;
+        this.imageOffset.dir = false;
+        this.imageOffset.newWidth = this.divWidth;
+        this.imageOffset.newHeight = offset;
+      } else {
+        offset = (this.divWidth / height) * width;
+        this.imageOffset.dir = true;
+        this.imageOffset.newWidth = offset;
+        this.imageOffset.newHeight = this.divWidth;
+      }
+      offset = ((this.divWidth - offset) / 2);
+      this.imageOffset.val = offset;
+      this.interAutoColorizeImage();
+    };
   }
   close() {
     this.sendError = false;
