@@ -19,10 +19,10 @@
       <button (mousedown)="setBWImage()" (mouseup)="setColorImage()" mat-fab style="float: left; margin-top: 20px; margin-left: 7px; vertical-align: center" title="Show Original Image">
         <img [class.image-icon]="imageBW" src="../assets/images/orig_image.svg" style="width: 70%; margin-top: -5px" alt="magic_wand">
       </button>
-      <button mat-fab style="float: left; margin-top: 20px; margin-left: 7px; vertical-align: center" title="Restore Original Image">
+      <button mat-fab style="float: left; margin-top: 20px; margin-left: 7px; vertical-align: center" title="Restore Original Image" (click)="restoreOriginal()">
         <img src="../assets/images/restore.svg" style="width: 70%; margin-top: -5px" alt="restore">
       </button>
-      <a mat-fab style="float: left; margin-top: 20px; margin-left: 7px; vertical-align: center" [href]="imageString" [download]="imageName" title="Download">
+      <a mat-fab style="float: left; margin-top: 20px; margin-left: 7px; vertical-align: center" [href]="imageColorized" [download]="imageName" title="Download">
         <img src="../assets/images/download_img.svg" style="width: 50%; margin-top: -3px" alt="download">
       </a>
     </div>

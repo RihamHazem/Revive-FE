@@ -31,7 +31,7 @@ export class UploadImageComponent implements OnInit {
   onFileInvalids(status: string) {
     if (status === 'invalid file') {
       this.uploadError = true;
-      this.messageError = 'Invalid type image. The supported types are [jpg, jpeg, png, gif, jfif]';
+      this.messageError = 'Invalid type image. The supported types are [jpg, jpeg, png]. Please, try another image';
     } else if (status === 'multiple files') {
       this.uploadError = true;
       this.messageError = 'You cannot upload multiple files. Just one image';

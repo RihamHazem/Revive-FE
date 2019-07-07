@@ -168,6 +168,7 @@ export class InteractiveColorizationComponent implements OnInit {
       i += 1;
     }
     console.log('Token', this.imgToken);
+    console.log('Positions', filteredPositions);
     this.restRequestsService.interColrImage(filteredPositions, this.imgToken).subscribe((data) => {
       if (data.hasOwnProperty('image')) {
         this.imageColorized = data.image;
