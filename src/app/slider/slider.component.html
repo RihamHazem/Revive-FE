@@ -1,0 +1,8 @@
+<ngb-carousel *ngIf="images.length > 1" interval="0" (slide)="updateImageDownload($event)">
+  <ng-template ngbSlide>
+    <img [src]="images[0]" alt="Random first slide" style="width: 384px; display: block; margin: auto;">
+  </ng-template>
+  <ng-template ngbSlide>
+    <img [src]="images[1]" alt="Random second slide" style="width: 384px">
+  </ng-template>
+</ngb-carousel>
