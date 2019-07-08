@@ -25,6 +25,7 @@ import { AutoColorizationComponent } from './tools/auto-colorization/auto-colori
 import { SuperResolutionComponent } from './tools/super-resolution/super-resolution.component';
 import { AppRoutingModule } from './app-routing.module';
 import {FormsModule} from '@angular/forms';
+import { SliderComponent } from './slider/slider.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -36,7 +37,8 @@ import {FormsModule} from '@angular/forms';
     OptionsComponent,
     AutoColorizationComponent,
     SuperResolutionComponent,
-    DialogComponent
+    DialogComponent,
+    SliderComponent
   ],
   entryComponents: [DialogComponent],
   imports: [

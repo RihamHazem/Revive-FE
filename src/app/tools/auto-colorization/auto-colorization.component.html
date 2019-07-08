@@ -4,8 +4,9 @@
     <mat-card-title>Automatic Colorization</mat-card-title>
     <mat-card-subtitle>Automatically Colorize Your Photo</mat-card-subtitle>
   </mat-card-header>
-  <mat-card-content>  
-    <div class="image" [ngStyle]="{'background-image': 'url('+(imageBW? origImage:imageString)+')'}"></div>
+  <mat-card-content>
+    <app-slider [images]="imageBW? origImage:coloredImages" [downloadImage]="downloadImage" style="display: inline-block !important;"></app-slider>
+<!--    <div class="image" [ngStyle]="{'background-image': 'url('+(imageBW? origImage:imageString)+')'}"></div>-->
     <div class="column-buttons">
       <button (mousedown)="setBWImage()" (mouseup)="setColorImage()" mat-fab title="Show Original Image">
         <img [class.image-icon]="imageBW" src="../assets/images/orig_image.svg" style="width: 70%; margin-top: -5px" alt="magic_wand">
@@ -13,7 +14,7 @@
       <button mat-fab title="Super Resolution" (click)="superResImage()">
         <img src="../assets/images/image_magnify.svg" style="width: 70%; margin-top: -5px" alt="magic_wand">
       </button>
-      <a mat-fab [href]="imageString" [download]="imageName" title="Download">
+      <a mat-fab [href]="downloadImage" [download]="imageName" title="Download">
         <img src="../assets/images/download_img.svg" style="width: 50%; margin-top: -3px" alt="magic_wand">
       </a>
     </div>

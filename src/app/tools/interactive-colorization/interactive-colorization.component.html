@@ -28,6 +28,8 @@
     </div>
     <div *ngIf="loading" class="loader"></div>
   </mat-card-content>
+
+  <app-slider [images]=""></app-slider>
 </mat-card>
 
 <ngb-alert class="error" type="danger" *ngIf="sendError" (close)="close()">{{ messageError }}</ngb-alert>

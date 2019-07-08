@@ -8,22 +8,26 @@ import {ActivatedRoute, Router} from '@angular/router';
   styleUrls: ['./super-resolution.component.css']
 })
 export class SuperResolutionComponent implements OnInit {
-  private imageString: string;
-  private originalImage: string;
+  private originalImage = [];
   private imageName: string;
   imageOrig = false;
+  downloadImage = '';
+  resImages = [];
 
   constructor(private shareDataService: ShareDataService, private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit() {
     this.shareDataService.currentMessage.subscribe(({img, name}) => {
-      this.originalImage = img;
+      this.originalImage.push(img);
+      this.originalImage.push(img);
       this.imageName = name;
     });
-    this.shareDataService.newMessage.subscribe((img) => {
-      this.imageString = img;
+    this.shareDataService.autoImages.subscribe(({img1, img2}) => {
+      this.resImages.push(img1);
+      this.downloadImage = img1;
+      this.resImages.push(img2);
     });
-    if (this.originalImage === '') {
+    if (this.originalImage[0] === '') {
       this.router.navigateByUrl('/');
     }
   }

@@ -22,6 +22,7 @@
     "@angular/platform-browser-dynamic": "~8.0.0",
     "@angular/router": "~8.0.0",
     "@ng-bootstrap/ng-bootstrap": "^4.2.1",
+    "angular-bootstrap-md": "^7.5.4",
     "bootstrap": "^4.3.1",
     "jquery": "^3.4.1",
     "ngx-color": "^3.0.3",

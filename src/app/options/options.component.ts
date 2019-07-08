@@ -51,14 +51,14 @@ export class OptionsComponent implements OnInit {
   }
   public colorizeImage(model: number) { // number of the model that user chose
     this.loading = true;
-    this.restReqService.autoColrImage(this.imageString, model).subscribe((data) => {
+    this.restReqService.autoColrImage(this.imageString, model, 512).subscribe((data) => {
       // response is the colorized image
       console.log('Data:', data);
-      if (data.hasOwnProperty('img')) {
+      if (data.hasOwnProperty('img1')) {
         // black and white image
         this.shareDataService.changeMessage(this.imageString, this.imageName);
         // colorized image
-        this.shareDataService.changeNewMessage(data.img);
+        this.shareDataService.changeAutoImages(data.img1, data.img2);
         this.loading = false;
         this.router.navigateByUrl('/tools/auto');
       } else {
@@ -103,11 +103,11 @@ export class OptionsComponent implements OnInit {
     this.loading = true;
     this.restReqService.superResImage(this.imageString).subscribe((data) => {
       // response is the colorized image
-      if (data.hasOwnProperty('img')) {
+      if (data.hasOwnProperty('img1')) {
         // original image
         this.shareDataService.changeMessage(this.imageString, this.imageName);
         // super resolution image
-        this.shareDataService.changeNewMessage(data.img);
+        this.shareDataService.changeAutoImages(data.img1, data.img2);
         this.loading = false;
         this.router.navigateByUrl('/tools/super');
       } else {

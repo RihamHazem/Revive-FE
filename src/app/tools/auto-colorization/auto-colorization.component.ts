@@ -14,21 +14,27 @@ export class AutoColorizationComponent implements OnInit {
   private loading = false;
   private sendError = false;
   private messageError = 'Error in sending Image, Maybe it\'s a connection problem';
-  private origImage: string;
+  private origImage = [];
   private imageName: string;
+  coloredImages = [];
   imageBW = false;
+  downloadImage = '';
   constructor(private shareDataService: ShareDataService, private restRequestsService: RestRequestsService,
               private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit() {
     this.shareDataService.currentMessage.subscribe(({img, name}) => {
-      this.origImage = img;
+      this.origImage.push(img);
+      this.origImage.push(img);
       this.imageName = name;
     });
-    this.shareDataService.newMessage.subscribe((img) => {
-      this.imageString = img;
+    this.shareDataService.autoImages.subscribe(({img1, img2}) => {
+      this.coloredImages.push(img1);
+      this.downloadImage = img1;
+      this.coloredImages.push(img2);
     });
-    if (this.origImage === '') {
+    console.log(this.origImage);
+    if (this.origImage[0] === '') {
       this.router.navigateByUrl('/');
     }
   }
