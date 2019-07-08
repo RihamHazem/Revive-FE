@@ -5,7 +5,7 @@
     <mat-card-subtitle>Enhace the Resolution of Your Photo</mat-card-subtitle>
   </mat-card-header>
   <mat-card-content>
-    <app-slider [images]="imageOrig? originalImage:resImages" [downloadImage]="downloadImage" style="display: inline-block !important;"></app-slider>
+    <app-slider [images]="imageOrig? originalImage:resImages" (currentImg)="updateDownloadImg($event)" style="display: inline-block !important;"></app-slider>
     <div class="column-buttons">
       <button (mousedown)="setOrigImage()" (mouseup)="setResolImage()" color="accent" mat-fab title="Show Original Image">
         <img [class.image-icon]="imageOrig" src="../assets/images/orig_image.svg" style="width: 70%; margin-top: -5px" alt="magic_wand">

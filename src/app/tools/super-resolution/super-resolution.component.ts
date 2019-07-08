@@ -32,6 +32,10 @@ export class SuperResolutionComponent implements OnInit {
     }
   }
 
+  updateDownloadImg(idx) {
+    console.log(idx);
+    this.downloadImage = this.resImages[idx];
+  }
   setOrigImage() {
     this.imageOrig = true;
   }

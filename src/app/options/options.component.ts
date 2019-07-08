@@ -51,7 +51,7 @@ export class OptionsComponent implements OnInit {
   }
   public colorizeImage(model: number) { // number of the model that user chose
     this.loading = true;
-    this.restReqService.autoColrImage(this.imageString, model, 512).subscribe((data) => {
+    this.restReqService.autoColrImage(this.imageString, model, 512).subscribe((data) => { // TODO: make the size number be chosen from the user
       // response is the colorized image
       console.log('Data:', data);
       if (data.hasOwnProperty('img1')) {
@@ -156,7 +156,7 @@ export class OptionsComponent implements OnInit {
   templateUrl: 'dialog.component.html',
 })
 export class DialogComponent {
-  models = ['All Objects', 'Specifically Faces Approach#1', 'Specifically Faces Approach#2'];
+  models = ['Nature', 'Faces', 'All Objects'];
   selectedModel = 0;
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: number) {}

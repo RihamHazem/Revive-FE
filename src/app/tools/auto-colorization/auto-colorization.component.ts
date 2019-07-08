@@ -18,7 +18,7 @@ export class AutoColorizationComponent implements OnInit {
   private imageName: string;
   coloredImages = [];
   imageBW = false;
-  downloadImage = '';
+  downloadImage;
   constructor(private shareDataService: ShareDataService, private restRequestsService: RestRequestsService,
               private route: ActivatedRoute, private router: Router) { }
 
@@ -30,8 +30,8 @@ export class AutoColorizationComponent implements OnInit {
     });
     this.shareDataService.autoImages.subscribe(({img1, img2}) => {
       this.coloredImages.push(img1);
-      this.downloadImage = img1;
       this.coloredImages.push(img2);
+      this.downloadImage = img1;
     });
     console.log(this.origImage);
     if (this.origImage[0] === '') {
@@ -54,7 +54,10 @@ export class AutoColorizationComponent implements OnInit {
       this.loading = false;
     });
   }
-
+  updateDownloadImg(idx) {
+    console.log(idx);
+    this.downloadImage = this.coloredImages[idx];
+  }
   setBWImage() {
     this.imageBW = true;
   }

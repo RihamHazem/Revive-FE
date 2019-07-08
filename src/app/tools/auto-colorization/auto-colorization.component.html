@@ -5,7 +5,7 @@
     <mat-card-subtitle>Automatically Colorize Your Photo</mat-card-subtitle>
   </mat-card-header>
   <mat-card-content>
-    <app-slider [images]="imageBW? origImage:coloredImages" [downloadImage]="downloadImage" style="display: inline-block !important;"></app-slider>
+    <app-slider [images]="imageBW? origImage:coloredImages" style="display: inline-block !important;" (currentImg)="updateDownloadImg($event)"></app-slider>
 <!--    <div class="image" [ngStyle]="{'background-image': 'url('+(imageBW? origImage:imageString)+')'}"></div>-->
     <div class="column-buttons">
       <button (mousedown)="setBWImage()" (mouseup)="setColorImage()" mat-fab title="Show Original Image">
