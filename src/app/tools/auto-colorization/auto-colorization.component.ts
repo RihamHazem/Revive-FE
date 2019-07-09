@@ -11,6 +11,8 @@ import {ActivatedRoute, Router} from '@angular/router';
 export class AutoColorizationComponent implements OnInit {
 
   private imageString: string;
+  private imgWidth: number;
+  private imgHeight: number;
   private loading = false;
   private sendError = false;
   private messageError = 'Error in sending Image, Maybe it\'s a connection problem';
@@ -26,6 +28,13 @@ export class AutoColorizationComponent implements OnInit {
     this.shareDataService.currentMessage.subscribe(({img, name}) => {
       this.origImage.push(img);
       this.origImage.push(img);
+      const image = new Image();
+      image.src = this.imageString;
+
+      image.onload = () => {
+        this.imgWidth = image.width;
+        this.imgHeight = image.height;
+      };
       this.imageName = name;
     });
     this.shareDataService.autoImages.subscribe(({img1, img2}) => {

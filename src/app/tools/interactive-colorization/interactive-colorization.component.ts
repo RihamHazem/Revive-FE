@@ -36,7 +36,6 @@ export class InteractiveColorizationComponent implements OnInit {
   curColor: { r: number, g: number, b: number, a: number } = {r: 0, g: 0, b: 0, a: 0};
   selectedPos = -1;
   selectedElem = null;
-  imageBW = false;
   private sendError = false;
   private messageError = 'Error in sending Image, Maybe it\'s a connection problem';
   private loading = false;
@@ -44,11 +43,6 @@ export class InteractiveColorizationComponent implements OnInit {
   static getRGBA(clr: { r: number, g: number, b: number, a: number }): string {
     return 'rgb(' + clr.r + ', ' + clr.g + ', ' + clr.b + ')';
   }
-  // @HostListener('window:beforeunload', ['$event'])
-  // beforeloadHandler(event) {
-  //   alert('hello');
-  //   this.deleteImage();
-  // }
   ngOnInit() {
     this.shareDataService.currentMessage.subscribe(({img, name}) => {
       this.imageString = img;
@@ -62,21 +56,6 @@ export class InteractiveColorizationComponent implements OnInit {
     if (this.imageColorized === '') {
       this.router.navigateByUrl('/');
     }
-  }
-
-  @HostListener('window:beforeunload', ['$event'])
-  unloadHandler(event) {
-    // this.deleteImage();
-    // tell back-end to delete image
-    console.log(event);
-    this.restRequestsService.deleteImage(this.imgToken).subscribe((data) => {
-      console.log('Data', data);
-      // alert('hello');
-    });
-    event.returnValue = true;
-  }
-  goodBye() {
-    alert('Goodbye, Riham!');
   }
   changeComplete(colorEvent: ColorEvent) {
     this.curColor = colorEvent.color.rgb;
@@ -148,16 +127,7 @@ export class InteractiveColorizationComponent implements OnInit {
     this.selectedPos = -1;
   }
 
-  setBWImage() {
-    this.imageBW = true;
-  }
-
-  setColorImage() {
-    this.imageBW = false;
-  }
-
   colorizeImage() {
-    this.loading = true;
     const filteredPositions = [];
     let i = 0;
     for (const elem of this.isHidden) {
@@ -169,30 +139,9 @@ export class InteractiveColorizationComponent implements OnInit {
     }
     if (filteredPositions.length === 0) {
       console.log('Zero Hints');
-      const imgInfo = {
-        newWidth: this.imageOffset.newWidth,
-        newHeight: this.imageOffset.newHeight
-      };
-      this.restRequestsService.interAutoColrImage(this.imageString, imgInfo).subscribe((data) => {
-        // response is the colorized image
-        console.log('Data:', data);
-        if (data.hasOwnProperty('image')) {
-          // colorized image
-          this.imgToken = data.name;
-          console.log('Token', this.imgToken);
-          this.imageColorized = data.image;
-          this.loading = false;
-        } else {
-          this.sendError = true;
-          this.loading = false;
-        }
-      }, error1 => {
-        console.log(error1);
-        this.sendError = true;
-        this.loading = false;
-      });
       return;
     }
+    this.loading = true;
 
     console.log('Token', this.imgToken);
     console.log('Positions', filteredPositions);
@@ -215,7 +164,5 @@ export class InteractiveColorizationComponent implements OnInit {
   }
   restoreOriginal() {
     this.isHidden.fill(true);
-  }
-  deleteImage() {
   }
 }

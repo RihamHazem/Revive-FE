@@ -1,14 +1,14 @@
 .drop-image {
-  height: 350px;
+  height: 300px;
   width: 600px;
   display: table;
 
   background-color: #f6f6f6;
   background-image: url("../../assets/images/up22.jpeg");
   background-repeat: no-repeat;
-  background-size: 40%;
+  background-size: 200px;
   background-position: center 0;
-  padding-top: 8%;
+  padding-top: 120px;
   margin: 0 auto 20px auto;
   outline: 2px dashed #CCCCCC;
   color: #a4a4a4;
