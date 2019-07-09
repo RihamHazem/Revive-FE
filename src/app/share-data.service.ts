@@ -20,7 +20,7 @@ export class ShareDataService {
   newMessage = this.newMessageSource.asObservable();
   interMessage = this.interMessageSource.asObservable();
   autoImages = this.autoImagesSource.asObservable();
-  resImages = this.autoImagesSource.asObservable();
+  resImages = this.resImagesSource.asObservable();
   constructor() { }
 
   changeMessage(img: string, name: string) {

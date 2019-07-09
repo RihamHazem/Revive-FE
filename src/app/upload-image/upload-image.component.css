@@ -14,7 +14,7 @@
   color: #a4a4a4;
   outline-offset: -10px;
   transition: outline-offset .15s ease-in-out, background-color .15s linear;
-  transform: translateY(-100px);
+  transform: translateY(-120px);
 }
 
 .text-wrapper {
@@ -55,7 +55,7 @@
 .hero-section {
   text-align: center;
   flex-direction: column;
-  padding-top: 130px;
+  padding-top: 100px;
 }
 .toolbar {
   height: 450px;

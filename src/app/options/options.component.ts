@@ -88,14 +88,14 @@ export class OptionsComponent implements OnInit {
     };
     this.restReqService.interAutoColrImage(this.imageString, imgInfo).subscribe((data) => {
       // response is the colorized image
-      console.log('Data:', data);
       if (data.hasOwnProperty('name')) {
+        console.log('Data:', data);
         // black and white image
-        this.shareDataService.changeMessage(this.imageString, this.imageName);
+        this.shareDataService.changeMessage(data.image, this.imageName);
         // colorized image
         const imgToken = data.name;
         console.log('Token', imgToken);
-        this.shareDataService.changeInterMessage(this.imageString, imgToken, this.imageOffset);
+        this.shareDataService.changeInterMessage(data.image, imgToken, this.imageOffset);
         this.loading = false;
         this.router.navigateByUrl('/tools/inter');
       } else {
@@ -112,13 +112,27 @@ export class OptionsComponent implements OnInit {
     this.loading = true;
     this.restReqService.superResImage(this.imageString).subscribe((data) => {
       // response is the colorized image
+      console.log(data);
       if (data.hasOwnProperty('img1')) {
-        // original image
-        this.shareDataService.changeMessage(this.imageString, this.imageName);
-        // super resolution image
-        this.shareDataService.changeResImages(data.img1, data.img2);
-        this.loading = false;
-        this.router.navigateByUrl('/tools/super');
+        const image = new Image();
+        image.src = this.imageString;
+
+        image.onload = () => {
+          const width = image.width;
+          const height = image.height;
+          // black and white image
+          this.shareDataService.changeMessage(this.imageString, this.imageName);
+          // colorized image
+          this.shareDataService.changeAutoImages(data.img1, data.img2, width, height);
+          this.loading = false;
+          this.router.navigateByUrl('/tools/super');
+        };
+        // // original image
+        // this.shareDataService.changeMessage(this.imageString, this.imageName);
+        // // super resolution image
+        // this.shareDataService.changeResImages(data.img1, data.img2);
+        // this.loading = false;
+        // this.router.navigateByUrl('/tools/super');
       } else {
         this.sendError = true;
         this.loading = false;

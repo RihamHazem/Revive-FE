@@ -1,5 +1,5 @@
 <!--The content below is only a placeholder and can be replaced.-->
-<div class="content">
+<div [ngStyle]="{'min-height': getHeight().toString() + 'px'}">
   <app-nav-bar [heroSection]="mode === 'upload'"></app-nav-bar>
   <router-outlet></router-outlet>
 </div>

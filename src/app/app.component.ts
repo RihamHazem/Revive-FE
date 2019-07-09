@@ -47,4 +47,7 @@ export class AppComponent implements OnInit {
     };
   }
 
+  getHeight() {
+    return window.innerHeight - 86;
+  }
 }

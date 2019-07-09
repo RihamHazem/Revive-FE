@@ -11,6 +11,8 @@ export class SuperResolutionComponent implements OnInit {
   private originalImage = [];
   private imageName: string;
   imageOrig = false;
+  imgWidth = 0;
+  imgHeight = 0;
   downloadImage = '';
   resImages = [];
 
@@ -22,10 +24,12 @@ export class SuperResolutionComponent implements OnInit {
       this.originalImage.push(img);
       this.imageName = name;
     });
-    this.shareDataService.resImages.subscribe(({img1, img2}) => {
+    this.shareDataService.autoImages.subscribe(({img1, img2, width, height}) => {
       this.resImages.push(img1);
-      this.downloadImage = img1;
       this.resImages.push(img2);
+      this.downloadImage = img1;
+      this.imgWidth = width;
+      this.imgHeight = height;
     });
     if (this.originalImage[0] === '') {
       this.router.navigateByUrl('/');

@@ -12,7 +12,7 @@
     </div>
     <div class="image" [ngStyle]="{'background-image': 'url('+(imageColorized)+')'}"></div>
     <div class="color-picker">
-      <color-sketch [color]="state" (onChangeComplete)="changeComplete($event)"></color-sketch>
+      <color-sketch [color]="state" (onChangeComplete)="changeComplete($event)" [disableAlpha]="true"></color-sketch>
       <button mat-fab style="float: left; margin-top: 20px; margin-left: 10px; vertical-align: center" (click)="colorizeImage()" title="Colorize">
         <img src="../assets/images/magic-wand.svg" style="max-width: 70%; margin-top: -8px" alt="magic_wand">
       </button>

@@ -1,1 +1,13 @@
 
+
+div.image {
+  width: 384px;
+  height: 384px;
+  border-radius: 4px;
+  box-shadow: 0 0 0 1px rgba(0,0,0,.15), 0 8px 16px rgba(0,0,0,.15);
+  margin: auto;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  background-color: #000;
+}
