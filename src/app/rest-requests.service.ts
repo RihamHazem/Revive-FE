@@ -5,7 +5,7 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
   providedIn: 'root'
 })
 export class RestRequestsService {
-  apiUrl = 'http://723aaa34.ngrok.io/';
+  apiUrl = 'http://e766ea02.ngrok.io/';
   // private options = { headers: new HttpHeaders().set('Content-Type', 'multipart/mixed; boundary="xxxx"') };
   constructor(private http: HttpClient) { }
   interColrImage(positions, imgToken) {

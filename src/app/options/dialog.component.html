@@ -1,15 +1,28 @@
 
 <mat-nav-list>
-  <h1 mat-dialog-title>Choose model</h1>
-  <mat-radio-group mat-dialog-content
-    aria-labelledby="example-radio-group-label"
-    class="example-radio-group"
-    [(ngModel)]="selectedModel">
-    <mat-radio-button style="display: block; font-size: x-small" *ngFor="let model of models; let i=index" [value]="i">
-      {{model}}
-    </mat-radio-button>
-  </mat-radio-group>
-  <div>
-    <button mat-raised-button style="background-color: #ffefa1" [mat-dialog-close]="selectedModel">Colorize</button>
+  <div style="float: left; width: 70%;">
+    <h1 mat-dialog-title style="font-size: small">Choose the size of your image</h1>
+    <mat-radio-group mat-dialog-content
+      aria-labelledby="example-radio-group-label"
+      [(ngModel)]="selectedSize">
+      <mat-radio-button style="display: block; font-size: x-small" *ngFor="let sz of sizes; let i=index" [value]="sz">
+        {{sz}}
+      </mat-radio-button>
+    </mat-radio-group>
   </div>
+  <div style="float: right; width: 30%; height: 270px">
+    <h1 mat-dialog-title style="font-size: small">Choose model</h1>
+    <mat-radio-group mat-dialog-content
+                     aria-labelledby="example-radio-group-label"
+                     class="example-radio-group"
+                     [(ngModel)]="selectedModel">
+      <mat-radio-button style="display: block; font-size: x-small" *ngFor="let model of models; let i=index" [value]="i">
+        {{model}}
+      </mat-radio-button>
+    </mat-radio-group>
+  </div>
+  <div style="float: left; clear: both;">
+    <button mat-raised-button style="background-color: #ffefa1" [mat-dialog-close]="{model: selectedModel, sz: selectedSize}">Colorize</button>
+  </div>
+  <p style="font-size: x-small; font-style: italic">It's better to try different sizes and choose the best colorized one</p>
 </mat-nav-list>

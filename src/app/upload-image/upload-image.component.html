@@ -9,7 +9,11 @@
 </mat-toolbar>
 <div class="drop-image" appDragAndDrop (filesChangeEmiter)="onFilesChange($event)" (filesInvalidEmiter)="onFileInvalids($event)" [allowedExtensions]="['png', 'jpg', 'jpeg']">
   <div class="text-wrapper">
-    <div class="centered">Drop your image here!</div>
+    <div class="centered">Drop your image here! or use the upload button</div>
+    <div class="upload-btn-wrapper">
+      <button class="btn">Upload a file</button>
+      <input type="file" name="myfile" (change)="onFilesChange($event.target['files'])"/>
+    </div>
   </div>
 </div>
 <ngb-alert class="error" type="danger" *ngIf="uploadError" (close)="close()">{{ messageError }}</ngb-alert>

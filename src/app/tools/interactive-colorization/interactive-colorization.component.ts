@@ -167,6 +167,33 @@ export class InteractiveColorizationComponent implements OnInit {
       }
       i += 1;
     }
+    if (filteredPositions.length === 0) {
+      console.log('Zero Hints');
+      const imgInfo = {
+        newWidth: this.imageOffset.newWidth,
+        newHeight: this.imageOffset.newHeight
+      };
+      this.restRequestsService.interAutoColrImage(this.imageString, imgInfo).subscribe((data) => {
+        // response is the colorized image
+        console.log('Data:', data);
+        if (data.hasOwnProperty('image')) {
+          // colorized image
+          this.imgToken = data.name;
+          console.log('Token', this.imgToken);
+          this.imageColorized = data.image;
+          this.loading = false;
+        } else {
+          this.sendError = true;
+          this.loading = false;
+        }
+      }, error1 => {
+        console.log(error1);
+        this.sendError = true;
+        this.loading = false;
+      });
+      return;
+    }
+
     console.log('Token', this.imgToken);
     console.log('Positions', filteredPositions);
     this.restRequestsService.interColrImage(filteredPositions, this.imgToken).subscribe((data) => {

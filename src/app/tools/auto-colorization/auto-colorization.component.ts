@@ -38,22 +38,6 @@ export class AutoColorizationComponent implements OnInit {
       this.router.navigateByUrl('/');
     }
   }
-  superResImage() {
-    this.loading = true;
-    this.restRequestsService.superResImage(this.imageString).subscribe((data) => {
-      // response is the colorized image
-      if (data.hasOwnProperty('img')) {
-        // super resolution image
-        this.imageString = data.img;
-      } else {
-        this.sendError = true;
-      }
-      this.loading = false;
-    }, (error1) => {
-      this.sendError = true;
-      this.loading = false;
-    });
-  }
   updateDownloadImg(idx) {
     console.log(idx);
     this.downloadImage = this.coloredImages[idx];

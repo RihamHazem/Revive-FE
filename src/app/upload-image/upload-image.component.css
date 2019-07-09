@@ -6,13 +6,12 @@
   background-color: #f6f6f6;
   background-image: url("../../assets/images/up22.jpeg");
   background-repeat: no-repeat;
-  background-size: 50%;
+  background-size: 40%;
   background-position: center 0;
-
-  padding-top: 250px;
+  padding-top: 8%;
   margin: 0 auto 20px auto;
   outline: 2px dashed #CCCCCC;
-  color: #CCCCCC;
+  color: #a4a4a4;
   outline-offset: -10px;
   transition: outline-offset .15s ease-in-out, background-color .15s linear;
   transform: translateY(-100px);
@@ -25,10 +24,10 @@
 }
 
 .centered {
-  font-family: sans-serif;
-  font-size: 1.3em;
-  font-weight: bold;
+  font-family: 'Oswald', sans-serif;
+  font-size: large;
   text-align:center;
+  margin: 15px;
 }
 
 .error {
@@ -77,4 +76,27 @@ mat-toolbar {
   right: 0;
   position: absolute;
   height: 450px;
+}
+.upload-btn-wrapper {
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+}
+
+.btn {
+  border: 2px solid #9D819D;
+  color: #9D819D;
+  background-color: white;
+  padding: 8px 20px;
+  border-radius: 8px;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.upload-btn-wrapper input[type=file] {
+  font-size: 100px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 0;
 }

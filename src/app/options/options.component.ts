@@ -36,8 +36,8 @@ export class OptionsComponent implements OnInit {
   }
   openDialog(): void {
     const dialogRef = this.dialog.open(DialogComponent, {
-      width: '500px',
-      data: 0
+      width: '600px',
+      data: {model: 0, sz: 255}
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -46,12 +46,13 @@ export class OptionsComponent implements OnInit {
         this.loading = false;
         return;
       }
+      console.log(result);
       this.colorizeImage(result);
     });
   }
-  public colorizeImage(model: number) { // number of the model that user chose
+  public colorizeImage({model, sz}) { // number of the model that user chose
     this.loading = true;
-    this.restReqService.autoColrImage(this.imageString, model, 512).subscribe((data) => { // TODO: make the size number be chosen from the user
+    this.restReqService.autoColrImage(this.imageString, model, sz).subscribe((data) => { // TODO: make the size number be chosen from the user
       // response is the colorized image
       console.log('Data:', data);
       if (data.hasOwnProperty('img1')) {
@@ -80,13 +81,13 @@ export class OptionsComponent implements OnInit {
     this.restReqService.interAutoColrImage(this.imageString, imgInfo).subscribe((data) => {
       // response is the colorized image
       console.log('Data:', data);
-      if (data.hasOwnProperty('image')) {
+      if (data.hasOwnProperty('name')) {
         // black and white image
         this.shareDataService.changeMessage(this.imageString, this.imageName);
         // colorized image
         const imgToken = data.name;
         console.log('Token', imgToken);
-        this.shareDataService.changeInterMessage(data.image, imgToken, this.imageOffset);
+        this.shareDataService.changeInterMessage(this.imageString, imgToken, this.imageOffset);
         this.loading = false;
         this.router.navigateByUrl('/tools/inter');
       } else {
@@ -157,8 +158,9 @@ export class OptionsComponent implements OnInit {
 })
 export class DialogComponent {
   models = ['Nature', 'Faces', 'All Objects'];
+  sizes = [512, 384, 256, 192, 128];
   selectedModel = 0;
+  selectedSize = 512;
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: number) {}
-
+  constructor(@Inject(MAT_DIALOG_DATA) public data: {model: 0, sz: 512}) {}
 }
