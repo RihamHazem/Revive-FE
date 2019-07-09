@@ -52,16 +52,24 @@ export class OptionsComponent implements OnInit {
   }
   public colorizeImage({model, sz}) { // number of the model that user chose
     this.loading = true;
-    this.restReqService.autoColrImage(this.imageString, model, sz).subscribe((data) => { // TODO: make the size number be chosen from the user
+    this.restReqService.autoColrImage(this.imageString, model, sz)
+      .subscribe((data) => { // TODO: make the size number be chosen from the user
       // response is the colorized image
       console.log('Data:', data);
       if (data.hasOwnProperty('img1')) {
-        // black and white image
-        this.shareDataService.changeMessage(this.imageString, this.imageName);
-        // colorized image
-        this.shareDataService.changeAutoImages(data.img1, data.img2);
-        this.loading = false;
-        this.router.navigateByUrl('/tools/auto');
+        const image = new Image();
+        image.src = this.imageString;
+
+        image.onload = () => {
+          const width = image.width;
+          const height = image.height;
+          // black and white image
+          this.shareDataService.changeMessage(this.imageString, this.imageName);
+          // colorized image
+          this.shareDataService.changeAutoImages(data.img1, data.img2, width, height);
+          this.loading = false;
+          this.router.navigateByUrl('/tools/auto');
+        };
       } else {
         this.sendError = true;
         this.loading = false;
@@ -108,7 +116,7 @@ export class OptionsComponent implements OnInit {
         // original image
         this.shareDataService.changeMessage(this.imageString, this.imageName);
         // super resolution image
-        this.shareDataService.changeAutoImages(data.img1, data.img2);
+        this.shareDataService.changeResImages(data.img1, data.img2);
         this.loading = false;
         this.router.navigateByUrl('/tools/super');
       } else {

@@ -22,7 +22,7 @@ export class SuperResolutionComponent implements OnInit {
       this.originalImage.push(img);
       this.imageName = name;
     });
-    this.shareDataService.autoImages.subscribe(({img1, img2}) => {
+    this.shareDataService.resImages.subscribe(({img1, img2}) => {
       this.resImages.push(img1);
       this.downloadImage = img1;
       this.resImages.push(img2);

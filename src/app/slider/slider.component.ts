@@ -26,4 +26,9 @@ export class SliderComponent implements OnInit {
       this.currentImg.emit(1);
     }
   }
+  getPadding() {
+    const factor = 384 / this.imgWidth;
+    const newHeight = this.imgHeight * factor;
+    return (newHeight - 384) / 2;
+  }
 }
